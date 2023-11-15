@@ -37,7 +37,8 @@ def ask_chatgpt(question, transcripts):
     combined_transcript = "\n\n".join([" ".join([item['text'] for item in transcript]) for transcript in transcripts])
 
     try:
-        response = openai.chat.completions.create(model="gpt-4",
+        # TODO - Change to a GPT-4 model
+        response = openai.chat.completions.create(model="gpt-3.5-turbo-1106",
                                                   messages=[{"role": "user", "content": combined_transcript},
                                                       {"role": "user", "content": question}])
         return response.choices[0].text.strip()
@@ -54,7 +55,8 @@ def main():
                    video_id and get_youtube_transcript(video_id)]
 
     if transcripts:
-        response = ask_chatgpt("Your question here", transcripts)
+        question = input("Ask a question: ")
+        response = ask_chatgpt(question, transcripts)
         print("ChatGPT Response:", response)
 
 
